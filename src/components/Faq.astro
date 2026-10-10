@@ -24,7 +24,7 @@ const faq = [
 	},
 	{
 		t: 'Instalasi Microsoft Office itu legal?',
-		j: 'Kami bantu proses instalasi di Windows 10/11. Untuk lisensi, kamu perlu punya lisensi resmi Microsoft sendiri. Kami nggak menyediakan atau membagikan lisensi bajakan.',
+		j: 'Kami bantu proses instalasi di Windows 10/11 pakai Office Deployment Tool (ODT), alat resmi dari Microsoft. Untuk lisensi, kamu perlu punya lisensi resmi Microsoft sendiri. Kami nggak menyediakan atau membagikan lisensi bajakan.',
 	},
 	{
 		t: 'Aku nggak paham harus mulai dari mana.',
@@ -40,51 +40,65 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
 ---
 
 <section id="faq" class="section container">
-	<div class="section-head">
-		<h2>Yang sering ditanya</h2>
-		<p>Masih ada yang mengganjal? Tanya langsung aja, gratis.</p>
-	</div>
+	<div class="faq-grid">
+		<div class="faq-kiri">
+			<h2>Yang sering ditanya</h2>
+			<p>Masih ada yang mengganjal? Tanya langsung aja, gratis.</p>
+			<a class="btn btn-outline btn-sm" href={pesan} target="_blank" rel="noopener"
+				>Chat dulu, gratis tanya-tanya</a
+			>
+		</div>
 
-	<div class="daftar">
-		{
-			faq.map((f) => (
-				<details class="item">
-					<summary>{f.t}</summary>
-					<p>{f.j}</p>
-				</details>
-			))
-		}
+		<div class="daftar">
+			{
+				faq.map((f) => (
+					<details class="item">
+						<summary>{f.t}</summary>
+						<p>{f.j}</p>
+					</details>
+				))
+			}
+		</div>
 	</div>
-
-	<p class="tanya">
-		Belum kejawab? <a href={pesan} target="_blank" rel="noopener">Chat dulu, gratis tanya-tanya</a>
-	</p>
 </section>
 
 <style>
-	/* Judul ikut ke tengah biar sebaris dengan daftarnya. */
-	.section-head {
-		max-width: 42rem;
-		margin-inline: auto;
-		text-align: center;
+	/* Mobile: tumpuk dengan jarak; dua kolom baru di 880px. */
+	.faq-grid {
+		display: grid;
+		gap: 44px;
+	}
+
+	.faq-kiri h2 {
+		font-size: clamp(28px, 3.6vw, 40px);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.faq-kiri p {
+		color: var(--text-2);
+		margin-top: 14px;
+		max-width: 22rem;
+	}
+
+	.faq-kiri .btn {
+		margin-top: 24px;
 	}
 
 	.daftar {
-		max-width: 42rem;
-		margin-inline: auto;
-		border-top: 1px solid var(--border);
+		border-top: 1px solid var(--line);
 	}
 
 	.item {
-		border-bottom: 1px solid var(--border);
+		border-bottom: 1px solid var(--line);
 	}
 
 	summary {
 		cursor: pointer;
 		padding: 20px 0;
-		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
 		font-weight: 700;
-		font-size: 17px;
+		font-size: 18px;
 		list-style: none;
 		display: flex;
 		align-items: baseline;
@@ -98,9 +112,9 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
 
 	summary::after {
 		content: '+';
-		color: var(--accent);
-		font-size: 22px;
-		font-weight: 700;
+		color: var(--leaf);
+		font-size: 24px;
+		font-weight: 600;
 		line-height: 1;
 		flex-shrink: 0;
 		transition: transform 0.15s;
@@ -119,19 +133,21 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
 		font-size: 15px;
 		margin: 0;
 		padding: 0 0 22px;
-		text-align: justify;
-		hyphens: auto;
+		max-width: 46rem;
 	}
 
-	.tanya {
-		max-width: 42rem;
-		margin: 24px auto 0;
-		color: var(--text-2);
-		font-size: 15px;
-	}
+	@media (min-width: 880px) {
+		.faq-grid {
+			display: grid;
+			grid-template-columns: 0.8fr 1.2fr;
+			gap: 64px;
+			align-items: start;
+		}
 
-	.tanya a {
-		color: var(--accent);
-		font-weight: 600;
+		.faq-kiri {
+			position: sticky;
+			top: 100px;
+			align-self: start;
+		}
 	}
 </style>

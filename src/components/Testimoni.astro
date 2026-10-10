@@ -1,5 +1,7 @@
 ---
 import testi1 from '../assets/testi/1.webp';
+import comingWhite from '../assets/testi/coming-soon-white.webp';
+import comingGreen from '../assets/testi/coming-soon-green.webp';
 import { WA_CHANNEL_BUKTI } from '../lib/wa';
 
 // PRD section 9: baru ada 1 testimoni, dan isinya masih berupa bukti pengiriman.
@@ -10,6 +12,18 @@ const testimoni = [
 	{
 		foto: testi1,
 		alt: 'Screenshot chat WhatsApp: klien minta dikabari saat pesanan siap, admin TemanKita mengabari pekerjaan sudah selesai dan bisa dicek lewat Google Drive, lalu klien berterima kasih.',
+		kutipan: '',
+		nama: '',
+	},
+	{
+		foto: comingWhite,
+		alt: 'Placeholder: bukti pesanan berikutnya segera hadir.',
+		kutipan: '',
+		nama: '',
+	},
+	{
+		foto: comingGreen,
+		alt: 'Placeholder: bukti pesanan berikutnya segera hadir.',
 		kutipan: '',
 		nama: '',
 	},
@@ -32,10 +46,12 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 
 {
 	testimoni.length > 0 && (
-		<section id="testimoni" class="section container">
-			<div class="section-head">
-				<h2>Bukti pesanan yang udah selesai</h2>
-				<p>Pesanan yang sudah dikerjakan sampai selesai dan diserahkan ke klien.</p>
+		<section id="testimoni" class="section bukti">
+			<div class="container">
+				<div class="section-head">
+					<h2>Bukti pesanan yang udah selesai</h2>
+					<p>Pesanan yang sudah dikerjakan sampai selesai dan diserahkan ke klien.</p>
+				</div>
 			</div>
 
 			<div class="marquee">
@@ -72,44 +88,49 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 				</div>
 			</div>
 
-			<div class="aksi">
-				<a class="btn btn-outline" href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener">
+			<div class="container aksi">
+				<a class="btn btn-primary" href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener">
 					Lihat semua bukti pesanan
 				</a>
-				<p class="aksi-ket">
-					Kumpulan bukti pesanan yang sudah selesai ada di channel WhatsApp kami.
-				</p>
+				<p class="aksi-ket">Kumpulan bukti pesanan yang sudah selesai ada di channel WhatsApp kami.</p>
 			</div>
 
 			{statistik.length > 0 && (
-				<ul class="stats">
-					{statistik.map((s) => (
-						<li>
-							<strong>{s.angka}</strong>
-							<span>{s.label}</span>
-						</li>
-					))}
-				</ul>
+				<div class="container">
+					<ul class="stats">
+						{statistik.map((s) => (
+							<li>
+								<strong>{s.angka}</strong>
+								<span>{s.label}</span>
+							</li>
+						))}
+					</ul>
+				</div>
 			)}
 		</section>
 	)
 }
 
 <style>
+	/* Transparan supaya latar gambar halaman terlihat. */
+	.bukti {
+		background: transparent;
+	}
+
 	.marquee {
 		overflow: hidden;
 		/* Tepi kanan-kiri dilembutkan supaya foto tidak terpotong kasar. */
-		mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+		mask-image: linear-gradient(90deg, transparent, #000 48px, #000 calc(100% - 48px), transparent);
 	}
 
 	.aksi {
-		margin-top: 36px;
+		margin-top: 40px;
 	}
 
 	.aksi-ket {
 		color: var(--text-2);
 		font-size: 14px;
-		margin: 12px 0 0;
+		margin-top: 14px;
 	}
 
 	.track {
@@ -120,7 +141,7 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 
 	/* Jarak dipasang per item, bukan pakai gap, supaya translateX(-50%) pas satu set. */
 	.item {
-		margin: 0 20px 0 0;
+		margin: 0 24px 0 0;
 		flex-shrink: 0;
 	}
 
@@ -134,17 +155,21 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 		}
 	}
 
+	/* Tinggi sama, lebar ikut rasio masing-masing. Foto bukti rasionya
+	   beda-beda (screenshot HP vs placeholder), jadi tinggi yang diseragamkan
+	   supaya baris marquee rata tanpa memotong screenshot aslinya. */
 	.foto {
-		width: 260px;
-		height: auto;
+		height: 380px;
+		width: auto;
 		display: block;
-		border: 1px solid var(--border);
-		border-radius: 12px;
+		border: 1px solid rgba(45, 106, 79, 0.18);
+		border-radius: var(--r-panel);
+		background: #fff;
 	}
 
 	figcaption {
 		margin-top: 14px;
-		max-width: 260px;
+		max-width: 250px;
 	}
 
 	blockquote {
@@ -152,7 +177,7 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 	}
 
 	blockquote p {
-		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
 		font-size: 18px;
 		font-weight: 700;
 		line-height: 1.35;
@@ -179,7 +204,7 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 
 	.stats strong {
 		display: block;
-		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
 		font-size: 34px;
 		font-weight: 800;
 		letter-spacing: -0.02em;
@@ -192,11 +217,7 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 
 	@media (max-width: 600px) {
 		.foto {
-			width: 200px;
-		}
-
-		figcaption {
-			max-width: 200px;
+			height: 300px;
 		}
 	}
 

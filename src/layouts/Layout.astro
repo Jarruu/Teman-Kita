@@ -1,3 +1,6 @@
+---
+import bg from '../assets/background.jpg';
+---
 <!doctype html>
 <html lang="id">
 	<head>
@@ -17,32 +20,38 @@
 			content="Bantuan website, makalah, PPT, sampai CV mulai Rp10.000. Gratis tanya-tanya di WhatsApp."
 		/>
 		<meta property="og:type" content="website" />
+		<meta name="theme-color" content="#2D6A4F" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Gabarito:wght@600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
 			rel="stylesheet"
 		/>
 	</head>
-	<body>
+	<body style={`--page-bg: url("${bg.src}")`}>
 		<slot />
 	</body>
 </html>
 
 <style is:global>
 	:root {
-		/* Hijau soft: cukup gelap supaya teks putih di atasnya lolos WCAG AA (6,4:1),
-		   tapi tidak sehitam hijau botol. Hover dibuat lebih gelap, bukan lebih terang. */
+		/* Hijau soft sebagai satu-satunya warna brand, di atas latar putih polos.
+		   Hijau = ruang tempat brand ini hidup (hero, CTA, footer).
+		   Putih = tempat orang membaca detailnya. */
 		--brand: #2d6a4f;
 		--brand-hover: #24583f;
-		--accent: #1b7f5a;
-		--border: #d6e6dc;
+		--leaf: #1b7f5a;
+		--paper: #ffffff;
+		--line: #dbeae0;
 		--text-2: #4f6b5d;
-		/* Teks di atas blok hijau. Keduanya lolos WCAG AA di atas #2D6A4F
-		   (5,1:1 dan 4,6:1). Jangan digelapkan lagi. */
+		/* Teks di atas blok hijau. Ketiganya lolos WCAG AA di atas #2D6A4F. */
 		--on-brand: #ffffff;
 		--on-brand-2: #dbeae1;
-		--on-brand-muted: #cddfd5;
+		--on-brand-3: #cddfd5;
+
+		/* Radius sengaja bertingkat, bukan satu radius untuk semua. */
+		--r-panel: 20px;
+		--r-pill: 999px;
 	}
 
 	* {
@@ -51,6 +60,8 @@
 
 	html {
 		scroll-behavior: smooth;
+		/* Cadangan kalau gambar latar gagal dimuat. */
+		background: var(--paper);
 	}
 
 	html,
@@ -60,20 +71,38 @@
 	}
 
 	body {
-		font-family: Inter, system-ui, sans-serif;
+		font-family: 'Instrument Sans', system-ui, sans-serif;
 		font-size: 16px;
-		line-height: 1.6;
+		line-height: 1.65;
 		color: var(--brand);
-		background: #fff;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	/* Latar gambar halaman. Dipasang sebagai lapisan fixed, bukan
+	   background-attachment: fixed, supaya tetap diam saat di-scroll
+	   di iOS Safari (yang mengabaikan background-attachment). */
+	body::before {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		background-image: var(--page-bg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 
 	h1,
 	h2,
 	h3 {
-		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
-		line-height: 1.2;
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
+		line-height: 1.15;
 		margin: 0;
 		text-wrap: balance;
+	}
+
+	p {
+		margin: 0;
 	}
 
 	.container {
@@ -87,14 +116,18 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 14px 28px;
-		border-radius: 999px;
+		padding: 14px 26px;
+		border-radius: var(--r-pill);
+		font-family: 'Instrument Sans', system-ui, sans-serif;
 		font-weight: 600;
 		font-size: 16px;
 		text-decoration: none;
 		border: 1px solid transparent;
 		cursor: pointer;
-		transition: background 0.2s;
+		transition:
+			background 0.18s,
+			color 0.18s,
+			border-color 0.18s;
 	}
 
 	.btn-primary {
@@ -106,57 +139,66 @@
 		background: var(--brand-hover);
 	}
 
-	.btn-outline {
+	/* Tombol di atas blok hijau: kertas, bukan hijau di atas hijau. */
+	.btn-light {
 		background: #fff;
 		color: var(--brand);
-		border-color: var(--brand);
+	}
+
+	.btn-light:hover {
+		background: var(--on-brand-2);
+	}
+
+	.btn-outline {
+		background: transparent;
+		color: var(--brand);
+		border-color: var(--line);
 	}
 
 	.btn-outline:hover {
-		background: var(--brand);
-		color: #fff;
+		border-color: var(--brand);
 	}
 
 	.btn-sm {
-		padding: 10px 22px;
+		padding: 10px 20px;
 		font-size: 15px;
 	}
 
 	.section {
-		padding-block: 72px;
+		padding-block: 88px;
 	}
 
 	section[id],
 	main[id] {
-		scroll-margin-top: 80px;
+		scroll-margin-top: 84px;
 	}
 
+	/* Judul section: kiri, karena seluruh halaman dibaca dari kiri. */
 	.section-head {
-		max-width: 40rem;
-		margin-bottom: 36px;
+		max-width: 44rem;
+		margin-bottom: 44px;
 	}
 
 	.section-head h2 {
-		font-size: clamp(26px, 3.4vw, 36px);
+		font-size: clamp(28px, 3.6vw, 40px);
 		font-weight: 800;
 		letter-spacing: -0.02em;
 	}
 
 	.section-head p {
 		color: var(--text-2);
-		margin: 12px 0 0;
-	}
-
-	.card {
-		background: #fff;
-		border: 1px solid var(--border);
-		border-radius: 12px;
+		margin-top: 14px;
+		max-width: 38rem;
 	}
 
 	:focus-visible {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--leaf);
 		outline-offset: 2px;
+		border-radius: 4px;
 	}
+
+	/* Momen gerak halaman ini didefinisikan lokal di Hero.astro,
+	   supaya keyframes-nya tidak keluar dari scope-nya. */
 
 	@media (prefers-reduced-motion: reduce) {
 		html {
@@ -168,6 +210,12 @@
 		*::after {
 			animation: none !important;
 			transition: none !important;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.section {
+			padding-block: 64px;
 		}
 	}
 </style>

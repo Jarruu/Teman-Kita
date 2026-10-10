@@ -1,21 +1,21 @@
 ---
+import bgWeb from '../assets/bg-layanan-web.jpg';
 import { waLink } from '../lib/wa';
 
 const unggulan = {
 	nama: 'Website',
 	desc: 'Portofolio, company profile, toko online, landing page, sampai web custom. Dari yang simpel sampai yang butuh sistem sendiri.',
 	isi: ['Web portofolio', 'Company profile', 'Toko online', 'Landing page', 'Web custom'],
-	estimasi: '3-14 hari',
+	estimasi: '3–30 hari',
 };
 
 const lain = [
-	{ nama: 'Aplikasi mobile', desc: 'Aplikasi Android dan iOS sesuai kebutuhanmu.', estimasi: '7-30 hari' },
-	{ nama: 'UI/UX', desc: 'Desain antarmuka dan alur pengguna.', estimasi: '2-7 hari' },
-	{ nama: 'Dokumen akademik', desc: 'Makalah, laporan, essay, review jurnal.', estimasi: '1-5 hari' },
-	{ nama: 'Resume', desc: 'CV yang enak dibaca rekruter.', estimasi: '1-2 hari' },
-	{ nama: 'Tugas coding', desc: 'Bantuan tugas pemrograman, bahasa apa saja.', estimasi: '1-5 hari' },
-	{ nama: 'Presentasi', desc: 'PPT yang jelas dan enak dilihat.', estimasi: '1-3 hari' },
-	{ nama: 'Desain grafis', desc: 'Logo, poster, dan infografis.', estimasi: '1-4 hari' },
+	{ nama: 'Aplikasi mobile', desc: 'Aplikasi Android dan iOS sesuai kebutuhanmu.', estimasi: '7–30 hari' },
+	{ nama: 'UI/UX', desc: 'Desain antarmuka dan alur pengguna.', estimasi: '2–14 hari' },
+	{ nama: 'Dokumen akademik', desc: 'Makalah, laporan, essay, review jurnal.', estimasi: '1–5 hari' },
+	{ nama: 'Resume', desc: 'CV yang enak dibaca rekruter.', estimasi: '1–2 hari' },
+	{ nama: 'Presentasi', desc: 'PPT yang jelas dan enak dilihat.', estimasi: '1–3 hari' },
+	{ nama: 'Desain grafis', desc: 'Logo, poster, dan infografis.', estimasi: '1–4 hari' },
 	{
 		nama: 'Instalasi software',
 		desc: 'Microsoft Office di Windows 10 dan 11.',
@@ -33,18 +33,20 @@ const lain = [
 		</p>
 	</div>
 
-	<article class="card unggulan">
+	<article class="unggulan" style={`--bg-web: url("${bgWeb.src}")`}>
 		<div class="u-kiri">
+			<p class="u-label">Paling sering diminta</p>
 			<h3>{unggulan.nama}</h3>
-			<p class="desc">{unggulan.desc}</p>
+			<p class="u-desc">{unggulan.desc}</p>
 			<ul class="isi">
 				{unggulan.isi.map((i) => <li>{i}</li>)}
 			</ul>
 		</div>
 		<div class="u-kanan">
-			<p class="estimasi">Estimasi {unggulan.estimasi}</p>
+			<p class="estimasi">{unggulan.estimasi}</p>
+			<p class="estimasi-ket">estimasi pengerjaan</p>
 			<a
-				class="btn btn-primary btn-sm"
+				class="btn btn-light"
 				href={waLink('Halo TemanKita! Aku mau tanya soal layanan Website.')}
 				target="_blank"
 				rel="noopener">Tanya soal Website</a
@@ -52,32 +54,34 @@ const lain = [
 		</div>
 	</article>
 
-	<div class="grid">
+	<ul class="daftar">
 		{
 			lain.map((l) => (
-				<a
-					class="card item"
-					href={waLink(`Halo TemanKita! Aku mau tanya soal layanan ${l.nama}.`)}
-					target="_blank"
-					rel="noopener"
-				>
-					<h3>{l.nama}</h3>
-					<p class="desc">{l.desc}</p>
-					<p class="estimasi">{l.estimasi}</p>
-				</a>
+				<li>
+					<a
+						class="row"
+						href={waLink(`Halo TemanKita! Aku mau tanya soal layanan ${l.nama}.`)}
+						target="_blank"
+						rel="noopener"
+					>
+						<span class="row-teks">
+							<span class="row-nama">{l.nama}</span>
+							<span class="row-desc">{l.desc}</span>
+						</span>
+						<span class="row-estimasi">{l.estimasi}</span>
+					</a>
+				</li>
 			))
 		}
-		<a
-			class="item tanya"
+	</ul>
+
+	<p class="luar">
+		Nggak ada di daftar? <a
 			href={waLink('Halo TemanKita! Aku punya permintaan di luar daftar layanan.')}
 			target="_blank"
-			rel="noopener"
-		>
-			<h3>Nggak ada di daftar?</h3>
-			<p class="desc">Ceritain aja kebutuhannya, kami cek bisa atau nggak.</p>
-			<span class="tanya-link">Tanya dulu aja</span>
-		</a>
-	</div>
+			rel="noopener">Ceritain aja, kami cek bisa atau nggak</a
+		>.
+	</p>
 </section>
 
 <style>
@@ -86,115 +90,162 @@ const lain = [
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: 24px;
-		padding: 28px;
-		margin-bottom: 16px;
+		gap: 28px;
+		/* Warna dasar kalau gambar gagal dimuat. */
+		background-color: var(--brand);
+		/* Gambar ditimpa selapis hijau brand, supaya teks putih tetap
+		   lolos kontras di atas gambar yang gelap dan ramai. */
+		background-image:
+			linear-gradient(rgba(45, 106, 79, 0.86), rgba(36, 88, 63, 0.9)),
+			var(--bg-web);
+		background-size: cover, cover;
+		background-position: center, center;
+		background-repeat: no-repeat, no-repeat;
+		color: var(--on-brand);
+		border-radius: var(--r-panel);
+		padding: 34px 32px;
 	}
 
 	.u-kiri {
 		max-width: 34rem;
 	}
 
-	.unggulan h3 {
-		font-size: 24px;
+	.u-label {
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--on-brand-2);
+		margin: 0 0 6px;
 	}
 
-	.desc {
-		color: var(--text-2);
+	.unggulan h3 {
+		font-size: 30px;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.u-desc {
+		color: var(--on-brand-2);
 		font-size: 15px;
-		margin: 8px 0 0;
+		margin-top: 10px;
 	}
 
 	.isi {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 6px;
+		gap: 8px;
 		list-style: none;
-		margin: 16px 0 0;
+		margin: 20px 0 0;
 		padding: 0;
 	}
 
 	.isi li {
 		font-size: 13px;
-		color: var(--brand);
-		border: 1px solid var(--border);
-		border-radius: 999px;
-		padding: 3px 12px;
+		color: var(--on-brand);
+		border: 1px solid rgba(255, 255, 255, 0.24);
+		border-radius: var(--r-pill);
+		padding: 4px 13px;
 	}
 
 	.u-kanan {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 12px;
+		gap: 4px;
 	}
 
 	.estimasi {
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
+		font-size: 26px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		color: #fff;
+	}
+
+	.estimasi-ket {
 		font-size: 13px;
-		color: var(--text-2);
+		color: var(--on-brand-2);
+		margin-bottom: 16px;
+	}
+
+	.daftar {
+		list-style: none;
 		margin: 0;
+		padding: 0;
+		border-top: 1px solid var(--line);
 	}
 
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-		gap: 16px;
-	}
-
-	.item {
-		padding: 22px;
+	.row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 24px;
+		padding: 20px 4px;
+		border-bottom: 1px solid var(--line);
 		text-decoration: none;
 		color: inherit;
-		transition: border-color 0.15s;
 	}
 
-	.item h3 {
-		font-size: 17px;
-	}
-
-	.item:hover {
-		border-color: var(--brand);
-	}
-
-	.item:hover h3 {
-		color: var(--accent);
-	}
-
-	.item .estimasi {
-		margin-top: 12px;
-	}
-
-	.tanya {
-		background: var(--brand);
-		border: 1px solid var(--brand);
-		border-radius: 12px;
-		color: #fff;
+	.row-teks {
 		display: flex;
-		flex-direction: column;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 4px 14px;
 	}
 
-	.tanya h3 {
-		color: #fff;
+	.row-nama {
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
+		font-size: 19px;
+		font-weight: 700;
+		color: var(--brand);
+		transition: color 0.18s;
 	}
 
-	.tanya .desc {
-		color: var(--on-brand-2);
+	.row-desc {
+		color: var(--text-2);
+		font-size: 15px;
 	}
 
-	.tanya-link {
-		margin-top: auto;
-		padding-top: 16px;
+	.row-estimasi {
+		flex-shrink: 0;
 		font-size: 14px;
+		color: var(--text-2);
+	}
+
+	.row:hover .row-nama {
+		color: var(--leaf);
+	}
+
+	.row:hover .row-estimasi {
+		color: var(--brand);
+	}
+
+	.luar {
+		color: var(--text-2);
+		margin-top: 24px;
+		font-size: 15px;
+	}
+
+	.luar a {
+		color: var(--leaf);
 		font-weight: 600;
-		color: #fff;
 	}
 
-	.tanya:hover {
-		background: var(--brand-hover);
-		border-color: var(--brand-hover);
+	@media (max-width: 560px) {
+		.row {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 6px;
+		}
 	}
 
-	.tanya:hover h3 {
-		color: #fff;
+	@media (max-width: 640px) {
+		.unggulan {
+			padding: 26px 22px;
+			gap: 22px;
+		}
+
+		.unggulan h3 {
+			font-size: 26px;
+		}
 	}
 </style>

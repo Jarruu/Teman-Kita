@@ -12,8 +12,8 @@ const instagram = '';
 	<div class="container">
 		<h2>Tugasmu kita bantu, kamu lanjut tidur.</h2>
 		<p>
-			Chat sekarang dan ceritain detailnya. Gratis tanya-tanya, harga pasti dikasih di awal
-			sebelum kamu bayar apa pun.
+			Chat sekarang dan ceritain detailnya. Gratis tanya-tanya, harga pasti dikasih di awal sebelum
+			kamu bayar apa pun.
 		</p>
 		<a class="btn btn-light" href={pesan} target="_blank" rel="noopener">Pesan Sekarang</a>
 		<p class="kecil">Dibalas cepat tiap hari, jam 08.00 sampai 22.00 WIB.</p>
@@ -63,47 +63,38 @@ const instagram = '';
 	.cta-akhir {
 		background: var(--brand);
 		color: #fff;
-		padding-block: 80px;
+		padding-block: 88px;
 	}
 
 	.cta-akhir h2 {
-		font-size: clamp(28px, 4vw, 42px);
+		font-size: clamp(30px, 4.4vw, 46px);
 		font-weight: 800;
-		line-height: 1.1;
+		line-height: 1.06;
 		letter-spacing: -0.03em;
-		max-width: 22ch;
+		max-width: 20ch;
 	}
 
 	.cta-akhir p {
 		color: var(--on-brand-2);
-		margin: 16px 0 0;
+		margin-top: 18px;
 		max-width: 34rem;
 	}
 
 	.cta-akhir .btn-light {
-		margin-top: 28px;
+		margin-top: 30px;
 	}
 
 	/* Lebih spesifik dari .cta-akhir p, jadi tidak perlu !important. */
 	.cta-akhir p.kecil {
 		font-size: 13px;
-		color: var(--on-brand-muted);
+		color: var(--on-brand-3);
 		margin-top: 16px;
-	}
-
-	.btn-light {
-		background: #fff;
-		color: var(--brand);
-	}
-
-	.btn-light:hover {
-		background: var(--border);
 	}
 
 	.footer {
 		background: var(--brand);
 		color: #fff;
-		border-top: 1px solid rgba(255, 255, 255, 0.14);
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
 		padding-top: 56px;
 	}
 
@@ -114,7 +105,7 @@ const instagram = '';
 	}
 
 	.nama {
-		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
 		font-weight: 800;
 		font-size: 22px;
 		margin: 0;
@@ -123,15 +114,15 @@ const instagram = '';
 	.tagline {
 		color: var(--on-brand-2);
 		font-size: 15px;
-		margin: 12px 0 0;
+		margin-top: 12px;
 		max-width: 24rem;
 	}
 
 	.footer h3 {
-		font-family: Inter, system-ui, sans-serif;
+		font-family: 'Instrument Sans', system-ui, sans-serif;
 		font-size: 14px;
 		font-weight: 600;
-		color: var(--on-brand-muted);
+		color: var(--on-brand-3);
 		margin: 0 0 14px;
 	}
 
@@ -157,12 +148,12 @@ const instagram = '';
 	.bawah {
 		margin-top: 48px;
 		padding-block: 22px;
-		border-top: 1px solid rgba(255, 255, 255, 0.14);
+		border-top: 1px solid rgba(255, 255, 255, 0.12);
 	}
 
 	.bawah p {
 		margin: 0;
-		color: var(--on-brand-muted);
+		color: var(--on-brand-3);
 		font-size: 13px;
 	}
 
@@ -170,6 +161,12 @@ const instagram = '';
 		.footer-inner {
 			grid-template-columns: 1fr;
 			gap: 32px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.cta-akhir {
+			padding-block: 64px;
 		}
 	}
 </style>

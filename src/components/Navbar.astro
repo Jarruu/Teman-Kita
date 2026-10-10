@@ -4,8 +4,10 @@ import { waLink } from '../lib/wa';
 
 const pesan = waLink('Halo TemanKita! Aku mau pesan.');
 const links = [
+	{ href: '#hero', label: 'Home' },
 	{ href: '#layanan', label: 'Layanan' },
 	{ href: '#cara-kerja', label: 'Cara Kerja' },
+	{ href: '#testimoni', label: 'Proof' },
 	{ href: '#faq', label: 'FAQ' },
 ];
 ---
@@ -21,10 +23,18 @@ const links = [
 				{
 					links.map((l) => (
 						<li>
-							<a href={l.href}>{l.label}</a>
+							<a class="nav-link" href={l.href}>
+								{l.label}
+							</a>
 						</li>
 					))
 				}
+				{/* CTA pindah ke dalam panel di mobile; versi navbar-nya disembunyikan. */}
+				<li class="menu-cta">
+					<a class="btn btn-primary" href={pesan} target="_blank" rel="noopener"
+						>Pesan Sekarang</a
+					>
+				</li>
 			</ul>
 		</nav>
 		<div class="nav-right">
@@ -50,22 +60,32 @@ const links = [
 	const btn = header.querySelector('.burger') as HTMLButtonElement;
 	const menu = document.getElementById('nav-menu') as HTMLUListElement;
 
-	btn.addEventListener('click', () => {
-		const open = header.classList.toggle('open');
+	const setMenu = (open: boolean) => {
+		header.classList.toggle('open', open);
 		btn.setAttribute('aria-expanded', String(open));
 		btn.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+		// Kunci scroll halaman selama menu ponsel terbuka.
+		document.body.style.overflow = open ? 'hidden' : '';
+	};
+
+	btn.addEventListener('click', () => {
+		setMenu(!header.classList.contains('open'));
 	});
 
 	menu.addEventListener('click', (e) => {
-		if ((e.target as HTMLElement).closest('a')) {
-			header.classList.remove('open');
-			btn.setAttribute('aria-expanded', 'false');
-			btn.setAttribute('aria-label', 'Buka menu');
-		}
+		if ((e.target as HTMLElement).closest('a')) setMenu(false);
 	});
 
+	// Tutup menu kalau layar dibesarkan melewati breakpoint mobile.
+	// Angka harus sama dengan breakpoint CSS di atas.
+	const mq = window.matchMedia('(min-width: 900px)');
+	mq.addEventListener('change', (e) => {
+		if (e.matches) setMenu(false);
+	});
+
+	// Hanya link anchor section (bukan CTA WhatsApp) yang ikut penanda aktif.
 	const items = new Map(
-		[...menu.querySelectorAll('a')].map((a) => [a.getAttribute('href')!.slice(1), a])
+		[...menu.querySelectorAll('.nav-link')].map((a) => [a.getAttribute('href')!.slice(1), a])
 	);
 	const obs = new IntersectionObserver(
 		(entries) => {
@@ -112,15 +132,15 @@ const links = [
 		position: sticky;
 		top: 0;
 		z-index: 50;
-		background: #fff;
-		border-bottom: 1px solid var(--border);
+		background: var(--paper);
+		border-bottom: 1px solid var(--line);
 	}
 
 	.nav-inner {
 		display: flex;
 		align-items: center;
 		gap: 24px;
-		height: 64px;
+		height: 68px;
 	}
 
 	.logo {
@@ -140,32 +160,42 @@ const links = [
 
 	.links {
 		display: flex;
-		gap: 24px;
+		gap: 28px;
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
 
-	.links a {
-		color: var(--brand);
+	/* .nav-link saja — CTA di dalam panel tetap bergaya tombol. */
+	.nav-link {
+		color: var(--text-2);
 		text-decoration: none;
 		font-weight: 500;
 		font-size: 15px;
+		padding-block: 4px;
+		border-bottom: 2px solid transparent;
+		transition: color 0.18s;
 	}
 
-	.links a:hover {
-		color: var(--accent);
+	.nav-link:hover {
+		color: var(--brand);
 	}
 
-	.links a.active {
-		color: var(--accent);
+	.nav-link.active {
+		color: var(--brand);
 		font-weight: 600;
+		border-bottom-color: var(--brand);
 	}
 
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 8px;
+	}
+
+	/* CTA dalam panel hanya muncul di mobile. */
+	.menu-cta {
+		display: none;
 	}
 
 	.burger {
@@ -185,35 +215,62 @@ const links = [
 		background: var(--brand);
 	}
 
-	@media (max-width: 767px) {
-		.nav nav {
-			margin-left: 0;
-		}
+	@media (max-width: 899px) {
+		/* .nav nav tetap margin-left:auto (dari basis) supaya grup kanan
+		   (tombol + burger) terdorong ke tepi; .links-nya sendiri fixed. */
 
 		.burger {
 			display: inline-flex;
 		}
 
+		/* Menu ponsel: panel penuh, bukan dropdown tipis — target jempol
+		   lebih besar dan tidak ada latar hero yang mengintip di belakang. */
 		.links {
 			display: none;
-			position: absolute;
-			top: 64px;
-			left: 0;
-			right: 0;
+			position: fixed;
+			inset: 68px 0 0;
 			flex-direction: column;
 			gap: 0;
-			background: #fff;
-			border-bottom: 1px solid var(--border);
-			padding: 8px 20px 16px;
+			background: var(--paper);
+			padding: 20px 24px 40px;
+			overflow-y: auto;
 		}
 
 		.nav.open .links {
 			display: flex;
 		}
 
-		.links a {
+		.nav-link {
 			display: block;
-			padding: 10px 4px;
+			padding: 16px 4px;
+			padding-left: 12px;
+			font-size: 17px;
+			border-bottom: 0;
+			border-left: 2px solid transparent;
+		}
+
+		.nav-link.active {
+			border-left-color: var(--brand);
+		}
+
+		/* Logo lebih kecil + CTA navbar disembunyikan supaya bar tidak
+		   meluber di 360px; CTA-nya muncul di dalam panel menu. */
+		.logo img {
+			height: 28px;
+		}
+
+		.nav-right .btn {
+			display: none;
+		}
+
+		.menu-cta {
+			display: block;
+			margin-top: 24px;
+			padding-left: 12px;
+		}
+
+		.menu-cta .btn {
+			width: 100%;
 		}
 	}
 </style>
