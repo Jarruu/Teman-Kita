@@ -1,0 +1,114 @@
+---
+import mockup from '../assets/mockup-chat-temankita.webp';
+import { waLink } from '../lib/wa';
+const pesan = waLink('Halo TemanKita! Aku mau tanya-tanya dulu.');
+---
+
+<section id="hero" class="hero container">
+	<div class="hero-copy">
+		<h1>Deadline mepet? Ada TemanKita.</h1>
+		<p class="sub">
+			Kirim detail tugasmu lewat WhatsApp. Kami kasih harga pasti di awal, kamu setuju dulu, baru
+			kami kerjakan.
+		</p>
+		<div class="cta">
+			<a class="btn btn-primary" href={pesan} target="_blank" rel="noopener">Pesan Sekarang</a>
+			<a class="btn btn-outline" href="#layanan">Lihat Layanan</a>
+		</div>
+		<ul class="badges">
+			<li>Mulai Rp10.000</li>
+			<li>Gratis tanya-tanya</li>
+			<li>Garansi revisi</li>
+		</ul>
+	</div>
+
+	<div class="hero-art">
+		<img
+			class="mockup"
+			src={mockup.src}
+			width={mockup.width}
+			height={mockup.height}
+			alt="Contoh chat WhatsApp dengan TemanKita: klien minta makalah 10 halaman dengan deadline besok pagi, admin menjawab bisa dan harga dikasih di awal."
+			fetchpriority="high"
+		/>
+	</div>
+</section>
+
+<style>
+	.hero {
+		display: grid;
+		gap: 48px;
+		padding-block: 56px 80px;
+	}
+
+	.hero-copy {
+		animation: rise 0.5s ease-out both;
+	}
+
+	.hero-copy h1 {
+		font-size: clamp(32px, 5.2vw, 54px);
+		font-weight: 800;
+		line-height: 1.08;
+		letter-spacing: -0.03em;
+	}
+
+	.sub {
+		color: var(--text-2);
+		font-size: 18px;
+		max-width: 32rem;
+		margin: 20px 0 0;
+	}
+
+	.cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 32px;
+	}
+
+	.badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 22px;
+		list-style: none;
+		padding: 0;
+		margin: 28px 0 0;
+		color: var(--text-2);
+		font-size: 14px;
+	}
+
+	.badges li::before {
+		content: '\2713  ';
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.hero-art {
+		display: flex;
+		justify-content: center;
+		animation: rise 0.6s 0.15s ease-out both;
+	}
+
+	.mockup {
+		width: 100%;
+		max-width: 560px;
+		height: auto;
+		display: block;
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: translateY(10px);
+		}
+	}
+
+	@media (min-width: 900px) {
+		.hero {
+			grid-template-columns: 1.15fr 0.85fr;
+			align-items: center;
+			gap: 64px;
+			padding-block: 72px 96px;
+		}
+	}
+</style>

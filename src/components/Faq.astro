@@ -1,0 +1,137 @@
+---
+import { waLink } from '../lib/wa';
+
+const faq = [
+	{
+		t: 'Data dan file aku aman nggak?',
+		j: 'Aman. File kamu cuma dipakai untuk mengerjakan pesanan, nggak dibagikan ke siapa pun. Setelah selesai dan kamu setuju, file bisa kami hapus kalau kamu minta.',
+	},
+	{
+		t: 'Revisi berapa kali?',
+		j: 'Revisi gratis untuk perbaikan yang sesuai brief awal, sampai hasilnya pas. Kalau ada perubahan di luar brief, kami kasih tahu dulu biaya tambahannya sebelum dikerjakan.',
+	},
+	{
+		t: 'Berapa lama pengerjaannya?',
+		j: 'Tergantung jenis tugas dan tingkat kesulitannya. Estimasi per layanan ada di bagian Layanan. Butuh cepat? Bilang tenggatnya di chat, kami cek bisa atau nggak.',
+	},
+	{
+		t: 'Bayarnya gimana?',
+		j: 'Lewat transfer bank atau e-wallet. Harga pasti kami kasih di awal lewat chat, kamu setuju dulu baru kami mulai. Nggak ada biaya tersembunyi.',
+	},
+	{
+		t: 'Kalau hasilnya nggak sesuai brief?',
+		j: 'Kami kerjakan ulang sampai sesuai brief yang kamu kirim di awal. Itu bagian dari garansi kami.',
+	},
+	{
+		t: 'Instalasi Microsoft Office itu legal?',
+		j: 'Kami bantu proses instalasi di Windows 10/11. Untuk lisensi, kamu perlu punya lisensi resmi Microsoft sendiri. Kami nggak menyediakan atau membagikan lisensi bajakan.',
+	},
+	{
+		t: 'Aku nggak paham harus mulai dari mana.',
+		j: 'Santai. Chat aja dulu, ceritain tugasnya, gratis tanya-tanya. Kami bantu arahkan mau ambil layanan yang mana.',
+	},
+	{
+		t: 'Bisa pesan yang nggak ada di daftar layanan?',
+		j: 'Bisa banget. Kirim aja detailnya lewat WhatsApp, kami cek dulu bisa dikerjakan atau nggak.',
+	},
+];
+
+const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
+---
+
+<section id="faq" class="section container">
+	<div class="section-head">
+		<h2>Yang sering ditanya</h2>
+		<p>Masih ada yang mengganjal? Tanya langsung aja, gratis.</p>
+	</div>
+
+	<div class="daftar">
+		{
+			faq.map((f) => (
+				<details class="item">
+					<summary>{f.t}</summary>
+					<p>{f.j}</p>
+				</details>
+			))
+		}
+	</div>
+
+	<p class="tanya">
+		Belum kejawab? <a href={pesan} target="_blank" rel="noopener">Chat dulu, gratis tanya-tanya</a>
+	</p>
+</section>
+
+<style>
+	/* Judul ikut ke tengah biar sebaris dengan daftarnya. */
+	.section-head {
+		max-width: 42rem;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.daftar {
+		max-width: 42rem;
+		margin-inline: auto;
+		border-top: 1px solid var(--border);
+	}
+
+	.item {
+		border-bottom: 1px solid var(--border);
+	}
+
+	summary {
+		cursor: pointer;
+		padding: 20px 0;
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-weight: 700;
+		font-size: 17px;
+		list-style: none;
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 20px;
+	}
+
+	summary::-webkit-details-marker {
+		display: none;
+	}
+
+	summary::after {
+		content: '+';
+		color: var(--accent);
+		font-size: 22px;
+		font-weight: 700;
+		line-height: 1;
+		flex-shrink: 0;
+		transition: transform 0.15s;
+	}
+
+	details[open] summary::after {
+		transform: rotate(45deg);
+	}
+
+	details[open] summary {
+		padding-bottom: 6px;
+	}
+
+	.item p {
+		color: var(--text-2);
+		font-size: 15px;
+		margin: 0;
+		padding: 0 0 22px;
+		text-align: justify;
+		hyphens: auto;
+	}
+
+	.tanya {
+		max-width: 42rem;
+		margin: 24px auto 0;
+		color: var(--text-2);
+		font-size: 15px;
+	}
+
+	.tanya a {
+		color: var(--accent);
+		font-weight: 600;
+	}
+</style>

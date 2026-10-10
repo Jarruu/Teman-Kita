@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { waLink } from '../lib/wa';
+---
+
+<Layout>
+	<main class="container dokumen">
+		<p><a class="balik" href="/">&larr; Kembali ke beranda</a></p>
+		<h1>Kebijakan Privasi</h1>
+		<p class="tanggal">Terakhir diperbarui: {new Date().toLocaleDateString('id-ID')}</p>
+
+		<h2>Data yang kami terima</h2>
+		<p>
+			Kami hanya menerima data yang kamu kirim sendiri lewat WhatsApp, seperti nama, nomor
+			WhatsApp, dan file atau detail tugas yang kamu berikan untuk dikerjakan.
+		</p>
+
+		<h2>Cara kami memakainya</h2>
+		<p>
+			Data itu cuma dipakai untuk mengerjakan pesanan kamu dan berkomunikasi soal pesanan.
+			Kami nggak menjual atau membagikannya ke pihak lain.
+		</p>
+
+		<h2>Penyimpanan</h2>
+		<p>
+			File tugas disimpan selama pengerjaan. Setelah pesanan selesai, kamu bisa minta kami
+			menghapusnya dan kami akan hapus.
+		</p>
+
+		<h2>Cookie dan analitik</h2>
+		<p>
+			Halaman ini belum memakai cookie pelacak atau analitik apa pun. Kalau nanti kami
+			menambahkannya, kami akan meminta izinmu lewat banner terlebih dahulu.
+		</p>
+
+		<h2>Pertanyaan</h2>
+		<p>
+			Ada pertanyaan soal privasi? <a href={waLink('Halo TemanKita! Aku mau tanya soal privasi data.')} target="_blank" rel="noopener">Chat kami di WhatsApp</a>.
+		</p>
+	</main>
+</Layout>
+
+<style>
+	.dokumen {
+		max-width: 44rem;
+		padding-block: 48px 80px;
+	}
+
+	.balik {
+		color: var(--accent);
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.balik:hover {
+		text-decoration: underline;
+	}
+
+	.dokumen h1 {
+		font-size: clamp(28px, 4vw, 40px);
+		font-weight: 800;
+		margin-top: 24px;
+	}
+
+	.tanggal {
+		color: var(--text-2);
+		font-size: 14px;
+		margin: 8px 0 32px;
+	}
+
+	.dokumen h2 {
+		font-size: 20px;
+		margin: 32px 0 8px;
+	}
+
+	.dokumen p {
+		color: var(--text-2);
+		margin: 0;
+	}
+
+	.dokumen a {
+		color: var(--accent);
+	}
+</style>

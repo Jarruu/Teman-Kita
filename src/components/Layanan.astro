@@ -1,0 +1,200 @@
+---
+import { waLink } from '../lib/wa';
+
+const unggulan = {
+	nama: 'Website',
+	desc: 'Portofolio, company profile, toko online, landing page, sampai web custom. Dari yang simpel sampai yang butuh sistem sendiri.',
+	isi: ['Web portofolio', 'Company profile', 'Toko online', 'Landing page', 'Web custom'],
+	estimasi: '3-14 hari',
+};
+
+const lain = [
+	{ nama: 'Aplikasi mobile', desc: 'Aplikasi Android dan iOS sesuai kebutuhanmu.', estimasi: '7-30 hari' },
+	{ nama: 'UI/UX', desc: 'Desain antarmuka dan alur pengguna.', estimasi: '2-7 hari' },
+	{ nama: 'Dokumen akademik', desc: 'Makalah, laporan, essay, review jurnal.', estimasi: '1-5 hari' },
+	{ nama: 'Resume', desc: 'CV yang enak dibaca rekruter.', estimasi: '1-2 hari' },
+	{ nama: 'Tugas coding', desc: 'Bantuan tugas pemrograman, bahasa apa saja.', estimasi: '1-5 hari' },
+	{ nama: 'Presentasi', desc: 'PPT yang jelas dan enak dilihat.', estimasi: '1-3 hari' },
+	{ nama: 'Desain grafis', desc: 'Logo, poster, dan infografis.', estimasi: '1-4 hari' },
+	{
+		nama: 'Instalasi software',
+		desc: 'Microsoft Office di Windows 10 dan 11.',
+		estimasi: '1 hari',
+	},
+];
+---
+
+<section id="layanan" class="section container">
+	<div class="section-head">
+		<h2>Apa yang bisa kami bantu?</h2>
+		<p>
+			Semua mulai dari Rp10.000. Harga pasti tergantung tingkat kesulitan dan tenggat. Chat dulu,
+			langsung dikasih penawaran.
+		</p>
+	</div>
+
+	<article class="card unggulan">
+		<div class="u-kiri">
+			<h3>{unggulan.nama}</h3>
+			<p class="desc">{unggulan.desc}</p>
+			<ul class="isi">
+				{unggulan.isi.map((i) => <li>{i}</li>)}
+			</ul>
+		</div>
+		<div class="u-kanan">
+			<p class="estimasi">Estimasi {unggulan.estimasi}</p>
+			<a
+				class="btn btn-primary btn-sm"
+				href={waLink('Halo TemanKita! Aku mau tanya soal layanan Website.')}
+				target="_blank"
+				rel="noopener">Tanya soal Website</a
+			>
+		</div>
+	</article>
+
+	<div class="grid">
+		{
+			lain.map((l) => (
+				<a
+					class="card item"
+					href={waLink(`Halo TemanKita! Aku mau tanya soal layanan ${l.nama}.`)}
+					target="_blank"
+					rel="noopener"
+				>
+					<h3>{l.nama}</h3>
+					<p class="desc">{l.desc}</p>
+					<p class="estimasi">{l.estimasi}</p>
+				</a>
+			))
+		}
+		<a
+			class="item tanya"
+			href={waLink('Halo TemanKita! Aku punya permintaan di luar daftar layanan.')}
+			target="_blank"
+			rel="noopener"
+		>
+			<h3>Nggak ada di daftar?</h3>
+			<p class="desc">Ceritain aja kebutuhannya, kami cek bisa atau nggak.</p>
+			<span class="tanya-link">Tanya dulu aja</span>
+		</a>
+	</div>
+</section>
+
+<style>
+	.unggulan {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		padding: 28px;
+		margin-bottom: 16px;
+	}
+
+	.u-kiri {
+		max-width: 34rem;
+	}
+
+	.unggulan h3 {
+		font-size: 24px;
+	}
+
+	.desc {
+		color: var(--text-2);
+		font-size: 15px;
+		margin: 8px 0 0;
+	}
+
+	.isi {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		list-style: none;
+		margin: 16px 0 0;
+		padding: 0;
+	}
+
+	.isi li {
+		font-size: 13px;
+		color: var(--brand);
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		padding: 3px 12px;
+	}
+
+	.u-kanan {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+
+	.estimasi {
+		font-size: 13px;
+		color: var(--text-2);
+		margin: 0;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 16px;
+	}
+
+	.item {
+		padding: 22px;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.15s;
+	}
+
+	.item h3 {
+		font-size: 17px;
+	}
+
+	.item:hover {
+		border-color: var(--brand);
+	}
+
+	.item:hover h3 {
+		color: var(--accent);
+	}
+
+	.item .estimasi {
+		margin-top: 12px;
+	}
+
+	.tanya {
+		background: var(--brand);
+		border: 1px solid var(--brand);
+		border-radius: 12px;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.tanya h3 {
+		color: #fff;
+	}
+
+	.tanya .desc {
+		color: var(--on-brand-2);
+	}
+
+	.tanya-link {
+		margin-top: auto;
+		padding-top: 16px;
+		font-size: 14px;
+		font-weight: 600;
+		color: #fff;
+	}
+
+	.tanya:hover {
+		background: var(--brand-hover);
+		border-color: var(--brand-hover);
+	}
+
+	.tanya:hover h3 {
+		color: #fff;
+	}
+</style>

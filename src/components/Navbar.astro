@@ -1,0 +1,219 @@
+---
+import logo from '../assets/temankita-icon-nobg.png';
+import { waLink } from '../lib/wa';
+
+const pesan = waLink('Halo TemanKita! Aku mau pesan.');
+const links = [
+	{ href: '#layanan', label: 'Layanan' },
+	{ href: '#cara-kerja', label: 'Cara Kerja' },
+	{ href: '#faq', label: 'FAQ' },
+];
+---
+
+<a class="skip" href="#konten">Lewati ke konten</a>
+<header class="nav">
+	<div class="container nav-inner">
+		<a class="logo" href="#hero" aria-label="TemanKita, kembali ke atas">
+			<img src={logo.src} alt="TemanKita" fetchpriority="high" />
+		</a>
+		<nav aria-label="Navigasi utama">
+			<ul id="nav-menu" class="links">
+				{
+					links.map((l) => (
+						<li>
+							<a href={l.href}>{l.label}</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<div class="nav-right">
+			<a class="btn btn-primary btn-sm" href={pesan} target="_blank" rel="noopener"
+				>Pesan Sekarang</a
+			>
+			<button
+				class="burger"
+				aria-expanded="false"
+				aria-controls="nav-menu"
+				aria-label="Buka menu"
+			>
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</div>
+	</div>
+</header>
+
+<script>
+	const header = document.querySelector('.nav') as HTMLElement;
+	const btn = header.querySelector('.burger') as HTMLButtonElement;
+	const menu = document.getElementById('nav-menu') as HTMLUListElement;
+
+	btn.addEventListener('click', () => {
+		const open = header.classList.toggle('open');
+		btn.setAttribute('aria-expanded', String(open));
+		btn.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+	});
+
+	menu.addEventListener('click', (e) => {
+		if ((e.target as HTMLElement).closest('a')) {
+			header.classList.remove('open');
+			btn.setAttribute('aria-expanded', 'false');
+			btn.setAttribute('aria-label', 'Buka menu');
+		}
+	});
+
+	const items = new Map(
+		[...menu.querySelectorAll('a')].map((a) => [a.getAttribute('href')!.slice(1), a])
+	);
+	const obs = new IntersectionObserver(
+		(entries) => {
+			entries.forEach((en) => {
+				if (!en.isIntersecting) return;
+				items.forEach((a) => {
+					a.classList.remove('active');
+					a.removeAttribute('aria-current');
+				});
+				const a = items.get(en.target.id);
+				if (a) {
+					a.classList.add('active');
+					a.setAttribute('aria-current', 'true');
+				}
+			});
+		},
+		{ rootMargin: '-40% 0px -55% 0px' }
+	);
+	items.forEach((_, id) => {
+		const s = document.getElementById(id);
+		if (s) obs.observe(s);
+	});
+</script>
+
+<style>
+	.skip {
+		position: absolute;
+		left: -9999px;
+		top: 0;
+	}
+
+	.skip:focus {
+		left: 12px;
+		top: 12px;
+		z-index: 100;
+		background: var(--brand);
+		color: #fff;
+		padding: 10px 16px;
+		border-radius: 8px;
+		text-decoration: none;
+	}
+
+	.nav {
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		background: #fff;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.nav-inner {
+		display: flex;
+		align-items: center;
+		gap: 24px;
+		height: 64px;
+	}
+
+	.logo {
+		display: inline-flex;
+		text-decoration: none;
+	}
+
+	.logo img {
+		height: 34px;
+		width: auto;
+		display: block;
+	}
+
+	.nav nav {
+		margin-left: auto;
+	}
+
+	.links {
+		display: flex;
+		gap: 24px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.links a {
+		color: var(--brand);
+		text-decoration: none;
+		font-weight: 500;
+		font-size: 15px;
+	}
+
+	.links a:hover {
+		color: var(--accent);
+	}
+
+	.links a.active {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.nav-right {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.burger {
+		display: none;
+		flex-direction: column;
+		gap: 5px;
+		background: none;
+		border: 0;
+		cursor: pointer;
+		padding: 8px;
+	}
+
+	.burger span {
+		width: 22px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--brand);
+	}
+
+	@media (max-width: 767px) {
+		.nav nav {
+			margin-left: 0;
+		}
+
+		.burger {
+			display: inline-flex;
+		}
+
+		.links {
+			display: none;
+			position: absolute;
+			top: 64px;
+			left: 0;
+			right: 0;
+			flex-direction: column;
+			gap: 0;
+			background: #fff;
+			border-bottom: 1px solid var(--border);
+			padding: 8px 20px 16px;
+		}
+
+		.nav.open .links {
+			display: flex;
+		}
+
+		.links a {
+			display: block;
+			padding: 10px 4px;
+		}
+	}
+</style>

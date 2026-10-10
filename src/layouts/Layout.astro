@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>TemanKita: Bantuan Tugas Mulai Rp10.000</title>
+		<meta
+			name="description"
+			content="TemanKita bantuin website, makalah, PPT, sampai CV, mulai Rp10.000. Gratis tanya-tanya, harga jelas di awal, chat sekarang."
+		/>
+		<meta property="og:title" content="TemanKita: Tugas Kamu, Kita Bantu" />
+		<meta
+			property="og:description"
+			content="Bantuan website, makalah, PPT, sampai CV mulai Rp10.000. Gratis tanya-tanya di WhatsApp."
+		/>
+		<meta property="og:type" content="website" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		/* Hijau soft: cukup gelap supaya teks putih di atasnya lolos WCAG AA (6,4:1),
+		   tapi tidak sehitam hijau botol. Hover dibuat lebih gelap, bukan lebih terang. */
+		--brand: #2d6a4f;
+		--brand-hover: #24583f;
+		--accent: #1b7f5a;
+		--border: #d6e6dc;
+		--text-2: #4f6b5d;
+		/* Teks di atas blok hijau. Keduanya lolos WCAG AA di atas #2D6A4F
+		   (5,1:1 dan 4,6:1). Jangan digelapkan lagi. */
+		--on-brand: #ffffff;
+		--on-brand-2: #dbeae1;
+		--on-brand-muted: #cddfd5;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+	}
+
+	body {
+		font-family: Inter, system-ui, sans-serif;
+		font-size: 16px;
+		line-height: 1.6;
+		color: var(--brand);
+		background: #fff;
+	}
+
+	h1,
+	h2,
+	h3 {
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		line-height: 1.2;
+		margin: 0;
+		text-wrap: balance;
+	}
+
+	.container {
+		width: 100%;
+		max-width: 1120px;
+		margin-inline: auto;
+		padding-inline: 20px;
+	}
+
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 14px 28px;
+		border-radius: 999px;
+		font-weight: 600;
+		font-size: 16px;
+		text-decoration: none;
+		border: 1px solid transparent;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+
+	.btn-primary {
+		background: var(--brand);
+		color: #fff;
+	}
+
+	.btn-primary:hover {
+		background: var(--brand-hover);
+	}
+
+	.btn-outline {
+		background: #fff;
+		color: var(--brand);
+		border-color: var(--brand);
+	}
+
+	.btn-outline:hover {
+		background: var(--brand);
+		color: #fff;
+	}
+
+	.btn-sm {
+		padding: 10px 22px;
+		font-size: 15px;
+	}
+
+	.section {
+		padding-block: 72px;
+	}
+
+	section[id],
+	main[id] {
+		scroll-margin-top: 80px;
+	}
+
+	.section-head {
+		max-width: 40rem;
+		margin-bottom: 36px;
+	}
+
+	.section-head h2 {
+		font-size: clamp(26px, 3.4vw, 36px);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.section-head p {
+		color: var(--text-2);
+		margin: 12px 0 0;
+	}
+
+	.card {
+		background: #fff;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+	}
+
+	:focus-visible {
+		outline: 3px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+
+		*,
+		*::before,
+		*::after {
+			animation: none !important;
+			transition: none !important;
+		}
+	}
+</style>

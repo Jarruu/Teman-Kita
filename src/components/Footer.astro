@@ -1,0 +1,175 @@
+---
+import { waLink, WA_CHANNEL, WA_NUMBER } from '../lib/wa';
+
+const pesan = waLink('Halo TemanKita! Aku mau pesan.');
+const waDisplay = `+${WA_NUMBER}`;
+const tahun = new Date().getFullYear();
+// ponytail: akun Instagram belum dikonfirmasi (PRD section 9); isi URL-nya kalau sudah ada.
+const instagram = '';
+---
+
+<section class="cta-akhir">
+	<div class="container">
+		<h2>Tugasmu kita bantu, kamu lanjut tidur.</h2>
+		<p>
+			Chat sekarang dan ceritain detailnya. Gratis tanya-tanya, harga pasti dikasih di awal
+			sebelum kamu bayar apa pun.
+		</p>
+		<a class="btn btn-light" href={pesan} target="_blank" rel="noopener">Pesan Sekarang</a>
+		<p class="kecil">Dibalas cepat tiap hari, jam 08.00 sampai 22.00 WIB.</p>
+	</div>
+</section>
+
+<footer class="footer">
+	<div class="container footer-inner">
+		<div class="brand">
+			<p class="nama">TemanKita</p>
+			<p class="tagline">Bantuan tugas buat pelajar dan mahasiswa, mulai Rp10.000.</p>
+		</div>
+		<nav class="kolom" aria-labelledby="f-kontak">
+			<h3 id="f-kontak">Kontak</h3>
+			<ul>
+				<li><a href={pesan} target="_blank" rel="noopener">WhatsApp {waDisplay}</a></li>
+				<li>
+					<a href={WA_CHANNEL} target="_blank" rel="noopener">Channel WhatsApp</a>
+				</li>
+				{
+					instagram && (
+						<li>
+							<a href={instagram} target="_blank" rel="noopener">
+								Instagram
+							</a>
+						</li>
+					)
+				}
+			</ul>
+		</nav>
+		<nav class="kolom" aria-labelledby="f-halaman">
+			<h3 id="f-halaman">Halaman</h3>
+			<ul>
+				<li><a href="#layanan">Layanan</a></li>
+				<li><a href="#cara-kerja">Cara Kerja</a></li>
+				<li><a href="#faq">FAQ</a></li>
+				<li><a href="/kebijakan-privasi">Kebijakan Privasi</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="container bawah">
+		<p>&copy; {tahun} TemanKita. Semua hak dilindungi.</p>
+	</div>
+</footer>
+
+<style>
+	.cta-akhir {
+		background: var(--brand);
+		color: #fff;
+		padding-block: 80px;
+	}
+
+	.cta-akhir h2 {
+		font-size: clamp(28px, 4vw, 42px);
+		font-weight: 800;
+		line-height: 1.1;
+		letter-spacing: -0.03em;
+		max-width: 22ch;
+	}
+
+	.cta-akhir p {
+		color: var(--on-brand-2);
+		margin: 16px 0 0;
+		max-width: 34rem;
+	}
+
+	.cta-akhir .btn-light {
+		margin-top: 28px;
+	}
+
+	/* Lebih spesifik dari .cta-akhir p, jadi tidak perlu !important. */
+	.cta-akhir p.kecil {
+		font-size: 13px;
+		color: var(--on-brand-muted);
+		margin-top: 16px;
+	}
+
+	.btn-light {
+		background: #fff;
+		color: var(--brand);
+	}
+
+	.btn-light:hover {
+		background: var(--border);
+	}
+
+	.footer {
+		background: var(--brand);
+		color: #fff;
+		border-top: 1px solid rgba(255, 255, 255, 0.14);
+		padding-top: 56px;
+	}
+
+	.footer-inner {
+		display: grid;
+		grid-template-columns: 1.6fr 1fr 1fr;
+		gap: 40px;
+	}
+
+	.nama {
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-weight: 800;
+		font-size: 22px;
+		margin: 0;
+	}
+
+	.tagline {
+		color: var(--on-brand-2);
+		font-size: 15px;
+		margin: 12px 0 0;
+		max-width: 24rem;
+	}
+
+	.footer h3 {
+		font-family: Inter, system-ui, sans-serif;
+		font-size: 14px;
+		font-weight: 600;
+		color: var(--on-brand-muted);
+		margin: 0 0 14px;
+	}
+
+	.footer ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 10px;
+	}
+
+	.footer a {
+		color: var(--on-brand-2);
+		text-decoration: none;
+		font-size: 15px;
+	}
+
+	.footer a:hover {
+		color: #fff;
+		text-decoration: underline;
+	}
+
+	.bawah {
+		margin-top: 48px;
+		padding-block: 22px;
+		border-top: 1px solid rgba(255, 255, 255, 0.14);
+	}
+
+	.bawah p {
+		margin: 0;
+		color: var(--on-brand-muted);
+		font-size: 13px;
+	}
+
+	@media (max-width: 700px) {
+		.footer-inner {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+	}
+</style>

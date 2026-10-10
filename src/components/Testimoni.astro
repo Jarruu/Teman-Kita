@@ -1,0 +1,213 @@
+---
+import testi1 from '../assets/testi/1.webp';
+import { WA_CHANNEL_BUKTI } from '../lib/wa';
+
+// PRD section 9: baru ada 1 testimoni, dan isinya masih berupa bukti pengiriman.
+// ponytail: kutipan dan nama SENGAJA kosong. Jangan karang kata-kata klien.
+// Begitu dapat izin, isi 2 field itu dan otomatis muncul tanpa ubah layout.
+// Tambah foto lain ke array ini, marquee-nya ikut memanjang sendiri.
+const testimoni = [
+	{
+		foto: testi1,
+		alt: 'Screenshot chat WhatsApp: klien minta dikabari saat pesanan siap, admin TemanKita mengabari pekerjaan sudah selesai dan bisa dicek lewat Google Drive, lalu klien berterima kasih.',
+		kutipan: '',
+		nama: '',
+	},
+];
+
+// Statistik disembunyikan sampai datanya nyata (PRD section 5).
+const statistik: { angka: string; label: string }[] = [];
+
+// Marquee: satu "setengah" track lalu digandakan, supaya animasi -50% nyambung tanpa jeda.
+// Setengah track digemukkan dulu kalau fotonya masih sedikit, biar tidak ada ruang kosong.
+const MIN_ITEM = 5;
+const ulang = Math.max(1, Math.ceil(MIN_ITEM / testimoni.length));
+const setengah = Array.from({ length: ulang }, () => testimoni).flat();
+const track = [...setengah, ...setengah];
+
+// Kecepatan dibuat konstan, jadi durasi ikut memanjang saat foto bertambah.
+const KECEPATAN_PX_PER_DETIK = 40;
+const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
+---
+
+{
+	testimoni.length > 0 && (
+		<section id="testimoni" class="section container">
+			<div class="section-head">
+				<h2>Bukti pesanan yang udah selesai</h2>
+				<p>Pesanan yang sudah dikerjakan sampai selesai dan diserahkan ke klien.</p>
+			</div>
+
+			<div class="marquee">
+				<div class="track" style={`animation-duration: ${durasi}s`}>
+					{
+						track.map((t, i) => {
+							// Salinan cuma untuk keperluan visual; screen reader cukup baca satu kali.
+							const visual = i >= testimoni.length;
+							return (
+								<figure class="item" aria-hidden={visual ? 'true' : undefined}>
+									<img
+										class="foto"
+										src={t.foto.src}
+										width={t.foto.width}
+										height={t.foto.height}
+										alt={visual ? '' : t.alt}
+										loading="lazy"
+										decoding="async"
+									/>
+									{(t.kutipan || t.nama) && (
+										<figcaption>
+											{t.kutipan && (
+												<blockquote>
+													<p>{t.kutipan}</p>
+												</blockquote>
+											)}
+											{t.nama && <span class="nama">{t.nama}</span>}
+										</figcaption>
+									)}
+								</figure>
+							);
+						})
+					}
+				</div>
+			</div>
+
+			<div class="aksi">
+				<a class="btn btn-outline" href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener">
+					Lihat semua bukti pesanan
+				</a>
+				<p class="aksi-ket">
+					Kumpulan bukti pesanan yang sudah selesai ada di channel WhatsApp kami.
+				</p>
+			</div>
+
+			{statistik.length > 0 && (
+				<ul class="stats">
+					{statistik.map((s) => (
+						<li>
+							<strong>{s.angka}</strong>
+							<span>{s.label}</span>
+						</li>
+					))}
+				</ul>
+			)}
+		</section>
+	)
+}
+
+<style>
+	.marquee {
+		overflow: hidden;
+		/* Tepi kanan-kiri dilembutkan supaya foto tidak terpotong kasar. */
+		mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+	}
+
+	.aksi {
+		margin-top: 36px;
+	}
+
+	.aksi-ket {
+		color: var(--text-2);
+		font-size: 14px;
+		margin: 12px 0 0;
+	}
+
+	.track {
+		display: flex;
+		width: max-content;
+		animation: geser 50s linear infinite;
+	}
+
+	/* Jarak dipasang per item, bukan pakai gap, supaya translateX(-50%) pas satu set. */
+	.item {
+		margin: 0 20px 0 0;
+		flex-shrink: 0;
+	}
+
+	.marquee:hover .track {
+		animation-play-state: paused;
+	}
+
+	@keyframes geser {
+		to {
+			transform: translateX(-50%);
+		}
+	}
+
+	.foto {
+		width: 260px;
+		height: auto;
+		display: block;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+	}
+
+	figcaption {
+		margin-top: 14px;
+		max-width: 260px;
+	}
+
+	blockquote {
+		margin: 0;
+	}
+
+	blockquote p {
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 1.35;
+		letter-spacing: -0.02em;
+		text-wrap: balance;
+		margin: 0;
+	}
+
+	.nama {
+		display: block;
+		margin-top: 10px;
+		font-weight: 600;
+		font-size: 15px;
+	}
+
+	.stats {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 40px;
+		list-style: none;
+		margin: 40px 0 0;
+		padding: 0;
+	}
+
+	.stats strong {
+		display: block;
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-size: 34px;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.stats span {
+		color: var(--text-2);
+		font-size: 14px;
+	}
+
+	@media (max-width: 600px) {
+		.foto {
+			width: 200px;
+		}
+
+		figcaption {
+			max-width: 200px;
+		}
+	}
+
+	/* Tanpa animasi, salinan kedua disembunyikan dan barisnya bisa digeser manual. */
+	@media (prefers-reduced-motion: reduce) {
+		.marquee {
+			overflow-x: auto;
+		}
+
+		.item[aria-hidden='true'] {
+			display: none;
+		}
+	}
+</style>

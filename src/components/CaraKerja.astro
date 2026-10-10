@@ -1,0 +1,126 @@
+---
+import { waLink } from '../lib/wa';
+
+const langkah = [
+	{ judul: 'Chat', teks: 'Ceritain tugas kamu. Gratis, cuma tanya-tanya juga boleh.' },
+	{ judul: 'Kirim detail', teks: 'Kirim file, tenggat, dan referensinya. Makin lengkap, makin cepat.' },
+	{ judul: 'Konfirmasi dan bayar', teks: 'Harga pasti dikasih di awal. Kamu setuju dulu, baru kami mulai.' },
+	{ judul: 'Terima hasil', teks: 'Hasil dikirim sesuai tenggat. Ada yang perlu diubah? Revisi sesuai kesepakatan.' },
+];
+
+const pesan = waLink('Halo TemanKita! Aku mau pesan, ini detailnya:');
+---
+
+<section id="cara-kerja" class="section container">
+	<div class="section-head">
+		<h2>Caranya cuma 4 langkah</h2>
+		<p>Semuanya lewat WhatsApp. Tanpa daftar akun, tanpa isi formulir panjang.</p>
+	</div>
+
+	<ol class="steps">
+		{
+			langkah.map((l, i) => (
+				<li class="step">
+					<span class="num">{i + 1}</span>
+					<div class="teks">
+						<h3>{l.judul}</h3>
+						<p>{l.teks}</p>
+					</div>
+				</li>
+			))
+		}
+	</ol>
+
+	<a class="btn btn-primary" href={pesan} target="_blank" rel="noopener">Mulai dari langkah 1</a>
+</section>
+
+<style>
+	.steps {
+		list-style: none;
+		margin: 0 0 36px;
+		padding: 0;
+		display: grid;
+		gap: 0;
+	}
+
+	.step {
+		display: grid;
+		grid-template-columns: 40px 1fr;
+		gap: 20px;
+		position: relative;
+		padding-bottom: 32px;
+	}
+
+	.step:last-child {
+		padding-bottom: 0;
+	}
+
+	/* Garis penghubung: isyarat bahwa langkah-langkahnya berurutan. */
+	.step:not(:last-child)::before {
+		content: '';
+		position: absolute;
+		left: 19px;
+		top: 40px;
+		bottom: 0;
+		width: 1px;
+		background: var(--border);
+	}
+
+	.num {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		background: #fff;
+		border: 1px solid var(--brand);
+		color: var(--brand);
+		font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+		font-weight: 800;
+		font-size: 16px;
+	}
+
+	.step:first-child .num {
+		background: var(--brand);
+		color: #fff;
+	}
+
+	.teks {
+		padding-top: 6px;
+	}
+
+	.step h3 {
+		font-size: 18px;
+	}
+
+	.step p {
+		color: var(--text-2);
+		font-size: 15px;
+		margin: 6px 0 0;
+		max-width: 40rem;
+	}
+
+	@media (min-width: 900px) {
+		.steps {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 24px;
+			margin-bottom: 40px;
+		}
+
+		.step {
+			grid-template-columns: 1fr;
+			gap: 16px;
+			padding-bottom: 0;
+		}
+
+		.step:not(:last-child)::before {
+			left: 48px;
+			right: -24px;
+			top: 20px;
+			bottom: auto;
+			height: 1px;
+			width: auto;
+		}
+	}
+</style>
