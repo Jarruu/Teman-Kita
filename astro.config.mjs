@@ -4,6 +4,6 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://temankita.my.id',
+	site: 'https://www.temankita.my.id',
 	integrations: [sitemap()],
 });
