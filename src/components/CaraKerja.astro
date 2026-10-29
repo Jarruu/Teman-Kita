@@ -14,11 +14,11 @@ const pesan = waLink('Halo TemanKita! Aku mau pesan, ini detailnya:');
 <section id="cara-kerja" class="section blok">
 	<div class="container">
 		<div class="section-head">
-			<h2>Caranya cuma 4 langkah</h2>
+			<h2>Caranya cuma {langkah.length} langkah</h2>
 			<p>Semuanya lewat WhatsApp. Tanpa daftar akun, tanpa isi formulir panjang.</p>
 		</div>
 
-		<ol class="steps">
+		<ol class="steps" role="list">
 			{
 				langkah.map((l, i) => (
 					<li class="step">
@@ -30,7 +30,9 @@ const pesan = waLink('Halo TemanKita! Aku mau pesan, ini detailnya:');
 			}
 		</ol>
 
-		<a class="btn btn-primary" href={pesan} target="_blank" rel="noopener">Mulai dari langkah 1</a>
+		<a class="btn btn-primary" href={pesan} target="_blank" rel="noopener"
+			>Mulai dari langkah 1<span class="sr-only"> (buka WhatsApp di tab baru)</span></a
+		>
 	</div>
 </section>
 
@@ -83,6 +85,23 @@ const pesan = waLink('Halo TemanKita! Aku mau pesan, ini detailnya:');
 			grid-template-columns: repeat(4, 1fr);
 			gap: 28px;
 			margin-bottom: 44px;
+		}
+
+		.step {
+			position: relative;
+		}
+
+		/* Chevron di celah antar kolom: menandai arah 1 → 2 → 3 → 4. */
+		.step:not(:last-child)::after {
+			content: '';
+			position: absolute;
+			top: -6px;
+			left: calc(100% + 7px);
+			width: 9px;
+			height: 9px;
+			border-top: 2px solid var(--line);
+			border-right: 2px solid var(--line);
+			transform: rotate(45deg);
 		}
 	}
 </style>

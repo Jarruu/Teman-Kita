@@ -1,11 +1,9 @@
 ---
-import { waLink, WA_CHANNEL, WA_NUMBER } from '../lib/wa';
+import { waLink, WA_CHANNEL, WA_CHANNEL_BUKTI, WA_NUMBER } from '../lib/wa';
 
 const pesan = waLink('Halo TemanKita! Aku mau pesan.');
 const waDisplay = `+${WA_NUMBER}`;
 const tahun = new Date().getFullYear();
-// ponytail: akun Instagram belum dikonfirmasi (PRD section 9); isi URL-nya kalau sudah ada.
-const instagram = '';
 ---
 
 <section class="cta-akhir">
@@ -23,30 +21,32 @@ const instagram = '';
 <footer class="footer">
 	<div class="container footer-inner">
 		<div class="brand">
-			<p class="nama">TemanKita</p>
+			<a class="nama" href="#hero">TemanKita</a>
 			<p class="tagline">Bantuan tugas buat pelajar dan mahasiswa, mulai Rp10.000.</p>
 		</div>
 		<nav class="kolom" aria-labelledby="f-kontak">
 			<h3 id="f-kontak">Kontak</h3>
-			<ul>
-				<li><a href={pesan} target="_blank" rel="noopener">WhatsApp {waDisplay}</a></li>
+			<ul role="list">
 				<li>
-					<a href={WA_CHANNEL} target="_blank" rel="noopener">Channel WhatsApp</a>
+					<a href={pesan} target="_blank" rel="noopener"
+						>WhatsApp {waDisplay}<span class="sr-only"> (buka di tab baru)</span></a
+					>
 				</li>
-				{
-					instagram && (
-						<li>
-							<a href={instagram} target="_blank" rel="noopener">
-								Instagram
-							</a>
-						</li>
-					)
-				}
+				<li>
+					<a href={WA_CHANNEL} target="_blank" rel="noopener"
+						>Channel WhatsApp<span class="sr-only"> (buka di tab baru)</span></a
+					>
+				</li>
+				<li>
+					<a href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener"
+						>Testimoni WhatsApp<span class="sr-only"> (buka di tab baru)</span></a
+					>
+				</li>
 			</ul>
 		</nav>
 		<nav class="kolom" aria-labelledby="f-halaman">
 			<h3 id="f-halaman">Halaman</h3>
-			<ul>
+			<ul role="list">
 				<li><a href="#layanan">Layanan</a></li>
 				<li><a href="#cara-kerja">Cara Kerja</a></li>
 				<li><a href="#faq">FAQ</a></li>
@@ -143,6 +143,13 @@ const instagram = '';
 	.footer a:hover {
 		color: #fff;
 		text-decoration: underline;
+	}
+
+	/* Nama brand sebagai link: kembalikan ukuran/warna yang tertimpa .footer a. */
+	.footer a.nama {
+		color: #fff;
+		font-size: 22px;
+		text-decoration: none;
 	}
 
 	.bawah {

@@ -1,5 +1,5 @@
 ---
-import heroArt from '../assets/hero.png';
+import heroArt from '../assets/mockup-chat-temankita.webp';
 import { waLink } from '../lib/wa';
 const pesan = waLink('Halo TemanKita! Aku mau tanya-tanya dulu.');
 ---
@@ -7,7 +7,7 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya-tanya dulu.');
 <section id="hero" class="hero">
 	<div class="container hero-inner">
 		<div class="hero-copy">
-			<h1>Deadline mepet?<br />Ada TemanKita.</h1>
+			<h1>Butuh bantuan tugas?<br />Ada TemanKita.</h1>
 			<p class="sub">
 				Kirim detail tugasmu lewat WhatsApp. Kami kasih harga pasti di awal, kamu setuju dulu,
 				baru kami kerjakan.
@@ -101,11 +101,43 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya-tanya dulu.');
 	}
 
 	@media (min-width: 920px) {
+		/* Setinggi layar laptop: viewport dikurangi tinggi navbar sticky. */
+		.hero {
+			min-height: calc(100vh - var(--nav-h));
+			min-height: calc(100svh - var(--nav-h));
+			display: grid;
+		}
+
 		.hero-inner {
 			grid-template-columns: 1.08fr 0.92fr;
 			align-items: center;
+			align-content: center;
 			gap: 60px;
 			padding-block: 84px 104px;
+		}
+
+		/* Konten hero diperbesar supaya section terasa lebih penuh. */
+		.hero-copy h1 {
+			font-size: clamp(40px, 5.4vw, 76px);
+		}
+
+		.sub {
+			font-size: 20px;
+			max-width: 34rem;
+			margin-top: 26px;
+		}
+
+		.cta {
+			margin-top: 40px;
+		}
+
+		.janji {
+			font-size: 16px;
+			margin-top: 30px;
+		}
+
+		.art {
+			max-width: 640px;
 		}
 	}
 

@@ -50,10 +50,13 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
 		</div>
 
 		<div class="daftar">
+			{/* name="faq" bikin jadi accordion: buka satu, yang lain menutup. */}
 			{
 				faq.map((f) => (
-					<details class="item">
-						<summary>{f.t}</summary>
+					<details class="item" name="faq">
+						<summary>
+							<h3>{f.t}</h3>
+						</summary>
 						<p>{f.j}</p>
 					</details>
 				))
@@ -108,6 +111,17 @@ const pesan = waLink('Halo TemanKita! Aku mau tanya dulu.');
 
 	summary::-webkit-details-marker {
 		display: none;
+	}
+
+	/* Heading di dalam summary: ikut gaya summary, bukan gaya h3 bawaan. */
+	summary h3 {
+		font-size: inherit;
+		font-weight: inherit;
+		line-height: inherit;
+	}
+
+	summary:hover {
+		color: var(--leaf);
 	}
 
 	summary::after {

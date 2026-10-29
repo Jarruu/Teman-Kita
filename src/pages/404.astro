@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	noindex
+	title="Halaman tidak ditemukan | TemanKita"
+	description="Halaman yang kamu cari tidak ada. Kembali ke beranda TemanKita atau langsung chat kami lewat WhatsApp."
+>
+	<main class="container hilang">
+		<p class="kode">404</p>
+		<h1>Halaman ini nggak ada.</h1>
+		<p class="ket">Mungkin linknya salah ketik atau halamannya sudah dipindah.</p>
+		<a class="btn btn-primary" href="/">Kembali ke beranda</a>
+	</main>
+</Layout>
+
+<style>
+	.hilang {
+		max-width: 34rem;
+		padding-block: 96px 120px;
+	}
+
+	.kode {
+		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
+		font-size: 15px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--text-2);
+	}
+
+	.hilang h1 {
+		font-size: clamp(30px, 5vw, 44px);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		margin-top: 12px;
+	}
+
+	.ket {
+		color: var(--text-2);
+		margin-top: 14px;
+	}
+
+	.hilang .btn {
+		margin-top: 28px;
+	}
+</style>

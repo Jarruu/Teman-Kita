@@ -1,5 +1,6 @@
 ---
 import testi1 from '../assets/testi/1.webp';
+import testi2 from '../assets/testi/testi2.webp';
 import comingWhite from '../assets/testi/coming-soon-white.webp';
 import comingGreen from '../assets/testi/coming-soon-green.webp';
 import { WA_CHANNEL_BUKTI } from '../lib/wa';
@@ -16,14 +17,20 @@ const testimoni = [
 		nama: '',
 	},
 	{
+		foto: testi2,
+		alt: 'Screenshot chat WhatsApp: bukti pembayaran DANA Rp25.000 ke Jaruu Software, lalu admin mengirim file makalah 12 halaman dan menawarkan revisi gratis 1x.',
+		kutipan: '',
+		nama: '',
+	},
+	{
 		foto: comingWhite,
-		alt: 'Placeholder: bukti pesanan berikutnya segera hadir.',
+		alt: 'Bukti pesanan berikutnya segera hadir.',
 		kutipan: '',
 		nama: '',
 	},
 	{
 		foto: comingGreen,
-		alt: 'Placeholder: bukti pesanan berikutnya segera hadir.',
+		alt: 'Bukti pesanan berikutnya segera hadir.',
 		kutipan: '',
 		nama: '',
 	},
@@ -49,7 +56,7 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 		<section id="testimoni" class="section bukti">
 			<div class="container">
 				<div class="section-head">
-					<h2>Bukti pesanan yang udah selesai</h2>
+					<h2>Bukti pesanan yang sudah selesai</h2>
 					<p>Pesanan yang sudah dikerjakan sampai selesai dan diserahkan ke klien.</p>
 				</div>
 			</div>
@@ -89,15 +96,20 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 			</div>
 
 			<div class="container aksi">
-				<a class="btn btn-primary" href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener">
-					Lihat semua bukti pesanan
-				</a>
+				<div class="aksi-baris">
+					<a class="btn btn-primary" href={WA_CHANNEL_BUKTI} target="_blank" rel="noopener">
+						Lihat semua bukti pesanan
+					</a>
+					{/* WCAG 2.2.2: konten bergerak otomatis harus bisa dijeda. */}
+					{/* Label berubah Jeda ↔ Mainkan; tanpa aria-pressed supaya tidak dobel sinyal. */}
+					<button class="btn btn-outline btn-sm jeda" type="button">Jeda animasi</button>
+				</div>
 				<p class="aksi-ket">Kumpulan bukti pesanan yang sudah selesai ada di channel WhatsApp kami.</p>
 			</div>
 
 			{statistik.length > 0 && (
 				<div class="container">
-					<ul class="stats">
+					<ul class="stats" role="list">
 						{statistik.map((s) => (
 							<li>
 								<strong>{s.angka}</strong>
@@ -111,6 +123,23 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 	)
 }
 
+<script>
+	const marquee = document.querySelector<HTMLElement>('.marquee');
+	const tombolJeda = document.querySelector<HTMLButtonElement>('.jeda');
+
+	if (marquee && tombolJeda) {
+		tombolJeda.addEventListener('click', () => {
+			const berhenti = marquee.classList.toggle('berhenti');
+			tombolJeda.textContent = berhenti ? 'Mainkan animasi' : 'Jeda animasi';
+		});
+
+		// Hemat CPU dan baterai: animasi berhenti saat marquee di luar layar.
+		new IntersectionObserver(([entry]) => {
+			marquee.classList.toggle('di-luar', !entry.isIntersecting);
+		}).observe(marquee);
+	}
+</script>
+
 <style>
 	/* Transparan supaya latar gambar halaman terlihat. */
 	.bukti {
@@ -120,11 +149,25 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 	.marquee {
 		overflow: hidden;
 		/* Tepi kanan-kiri dilembutkan supaya foto tidak terpotong kasar. */
+		-webkit-mask-image: linear-gradient(90deg, transparent, #000 48px, #000 calc(100% - 48px), transparent);
 		mask-image: linear-gradient(90deg, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+	}
+
+	/* Dijeda lewat tombol, atau otomatis saat marquee di luar layar. */
+	.marquee.berhenti .track,
+	.marquee.di-luar .track {
+		animation-play-state: paused;
 	}
 
 	.aksi {
 		margin-top: 40px;
+	}
+
+	.aksi-baris {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
 	}
 
 	.aksi-ket {
@@ -225,6 +268,11 @@ const durasi = (setengah.length * 280) / KECEPATAN_PX_PER_DETIK;
 	@media (prefers-reduced-motion: reduce) {
 		.marquee {
 			overflow-x: auto;
+		}
+
+		/* Animasi sudah mati, tombol jeda tidak ada gunanya. */
+		.jeda {
+			display: none;
 		}
 
 		.item[aria-hidden='true'] {

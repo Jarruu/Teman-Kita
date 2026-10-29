@@ -38,23 +38,25 @@ const lain = [
 			<p class="u-label">Paling sering diminta</p>
 			<h3>{unggulan.nama}</h3>
 			<p class="u-desc">{unggulan.desc}</p>
-			<ul class="isi">
+			<ul class="isi" role="list">
 				{unggulan.isi.map((i) => <li>{i}</li>)}
 			</ul>
 		</div>
 		<div class="u-kanan">
-			<p class="estimasi">{unggulan.estimasi}</p>
-			<p class="estimasi-ket">estimasi pengerjaan</p>
+			<p class="estimasi-blok">
+				<span class="estimasi">{unggulan.estimasi}</span>
+				<span class="estimasi-ket">estimasi pengerjaan</span>
+			</p>
 			<a
 				class="btn btn-light"
 				href={waLink('Halo TemanKita! Aku mau tanya soal layanan Website.')}
 				target="_blank"
-				rel="noopener">Tanya soal Website</a
+				rel="noopener">Tanya soal Website<span class="sr-only"> (buka WhatsApp di tab baru)</span></a
 			>
 		</div>
 	</article>
 
-	<ul class="daftar">
+	<ul class="daftar" role="list">
 		{
 			lain.map((l) => (
 				<li>
@@ -64,11 +66,14 @@ const lain = [
 						target="_blank"
 						rel="noopener"
 					>
-						<span class="row-teks">
-							<span class="row-nama">{l.nama}</span>
+						<div class="row-teks">
+							<h3 class="row-nama">{l.nama}</h3>
 							<span class="row-desc">{l.desc}</span>
+						</div>
+						<span class="row-estimasi">
+							<span class="sr-only">Estimasi: </span>{l.estimasi}
 						</span>
-						<span class="row-estimasi">{l.estimasi}</span>
+						<span class="sr-only"> (buka WhatsApp di tab baru)</span>
 					</a>
 				</li>
 			))
@@ -138,10 +143,11 @@ const lain = [
 		padding: 0;
 	}
 
+	/* Tanpa garis tepi supaya terbaca sebagai label, bukan tombol. */
 	.isi li {
 		font-size: 13px;
 		color: var(--on-brand);
-		border: 1px solid rgba(255, 255, 255, 0.24);
+		background: rgba(255, 255, 255, 0.14);
 		border-radius: var(--r-pill);
 		padding: 4px 13px;
 	}
@@ -151,6 +157,12 @@ const lain = [
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 4px;
+	}
+
+	.estimasi-blok {
+		display: flex;
+		flex-direction: column;
+		margin: 0;
 	}
 
 	.estimasi {
@@ -196,6 +208,7 @@ const lain = [
 		font-family: Gabarito, 'Instrument Sans', system-ui, sans-serif;
 		font-size: 19px;
 		font-weight: 700;
+		line-height: 1.3;
 		color: var(--brand);
 		transition: color 0.18s;
 	}
